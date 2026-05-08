@@ -2,8 +2,8 @@ import math
 import random
 from typing import Optional, Tuple
 
-from ...models.pose import Pose
 from ...models.coverage_map import CoverageMap
+from ...models.pose import Pose
 from .base import ExplorationStrategy
 
 

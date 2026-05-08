@@ -1,4 +1,5 @@
-from typing import Protocol, Optional, Tuple
+from typing import Optional, Protocol, Tuple
+
 import numpy as np
 
 from ...models.pose import Pose

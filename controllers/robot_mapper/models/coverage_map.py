@@ -1,4 +1,5 @@
-from typing import Tuple, Set
+from typing import Set, Tuple
+
 from .pose import Pose
 
 

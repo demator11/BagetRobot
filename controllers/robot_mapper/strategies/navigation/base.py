@@ -1,6 +1,7 @@
 from typing import Protocol
-from ...models.pose import Pose
+
 from ...models.command import RobotCommand
+from ...models.pose import Pose
 
 
 class NavigationStrategy(Protocol):

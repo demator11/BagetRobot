@@ -1,9 +1,16 @@
 import math
-from controllers.robot_mapper.models.pose import Pose
+
 from controllers.robot_mapper.models.coverage_map import CoverageMap
-from controllers.robot_mapper.strategies.exploration.random import RandomExploration
-from controllers.robot_mapper.strategies.exploration.greedy import GreedyExploration
-from controllers.robot_mapper.strategies.navigation.differential import DifferentialDriveNavigation
+from controllers.robot_mapper.models.pose import Pose
+from controllers.robot_mapper.strategies.exploration.greedy import (
+    GreedyExploration,
+)
+from controllers.robot_mapper.strategies.exploration.random import (
+    RandomExploration,
+)
+from controllers.robot_mapper.strategies.navigation.differential import (
+    DifferentialDriveNavigation,
+)
 
 
 def run_demo(exploration_strategy, name: str, steps: int = 100):
@@ -83,6 +90,6 @@ if __name__ == "__main__":
     )
 
     print(f"\n{'=' * 50}")
-    print(f"RESULTS:")
+    print("RESULTS:")
     print(f"  Random coverage: {random_score:.2f}%")
     print(f"  Greedy coverage: {greedy_score:.2f}%")
