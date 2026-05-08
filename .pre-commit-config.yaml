@@ -1,0 +1,37 @@
+default_language_version:
+  python: python3.13
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.12
+    hooks:
+      - id: ruff
+        name: ruff (lint)
+        args: [--fix]
+        stages: [pre-commit, pre-push]
+
+      - id: ruff-format
+        name: ruff (format)
+        stages: [pre-commit]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.6.1
+    hooks:
+      - id: mypy
+        entry: mypy .
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-docstring-first
+        stages: [pre-commit, pre-push]
+
+      - id: check-merge-conflict
+        stages: [pre-push]
+
+      - id: trailing-whitespace
+        stages: [pre-commit, pre-push]
+
+      - id: end-of-file-fixer
+        exclude: \.svg$
