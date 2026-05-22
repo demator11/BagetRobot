@@ -3,15 +3,18 @@ from dataclasses import dataclass
 
 @dataclass
 class RobotCommand:
-    """Команды управления дифференциальным приводом."""
-    linear_velocity: float  # м/с (вперёд/назад)
-    angular_velocity: float  # рад/с (+ = поворот против часовой)
+    """Differential drive command."""
+    linear_velocity: float  # m/s
+    angular_velocity: float  # rad/s
 
-    def stop(self) -> "RobotCommand":
-        return RobotCommand(linear_velocity=0.0, angular_velocity=0.0)
+    @classmethod
+    def stop(cls) -> "RobotCommand":
+        return cls(linear_velocity=0.0, angular_velocity=0.0)
 
-    def rotate(self, omega: float) -> "RobotCommand":
-        return RobotCommand(linear_velocity=0.0, angular_velocity=omega)
+    @classmethod
+    def rotate(cls, omega: float) -> "RobotCommand":
+        return cls(linear_velocity=0.0, angular_velocity=omega)
 
-    def move_forward(self, speed: float = 0.5) -> "RobotCommand":
-        return RobotCommand(linear_velocity=speed, angular_velocity=0.0)
+    @classmethod
+    def move_forward(cls, speed: float = 0.5) -> "RobotCommand":
+        return cls(linear_velocity=speed, angular_velocity=0.0)

@@ -11,14 +11,14 @@ from .models.pose import Pose
 class OccupancyGridVisualizer:
     """Визуализация состояния робота через matplotlib.
 
-    Окно 1 — карта занятости (occupancy grid):
+    Окно 1 - карта занятости (occupancy grid):
       - Чёрный (1.0) = стена
       - Белый (0.0) = свободно
       - Серый (0.5) = неизвестно
       - Зелёная точка = робот
       - Красный крест = текущая цель
 
-    Окно 2 — карта покрытия:
+    Окно 2 - карта покрытия:
       - Чёрный = не посещено
       - Зелёный = посещено 1 раз
       - Синий = посещено многократно
@@ -39,7 +39,6 @@ class OccupancyGridVisualizer:
 
         half_extent = map_size / 2 * resolution
 
-        # --- Window 1: Occupancy Grid ---
         self.fig1, self.ax1 = plt.subplots(figsize=(8, 8))
         self.fig1.canvas.manager.set_window_title("Occupancy Grid")
 
@@ -67,7 +66,6 @@ class OccupancyGridVisualizer:
         self.ax1.legend(loc="upper right")
         self.ax1.set_aspect("equal")
 
-        # --- Window 2: Coverage Heatmap ---
         self.fig2, self.ax2 = plt.subplots(figsize=(8, 8))
         self.fig2.canvas.manager.set_window_title("Coverage Heatmap")
 
@@ -112,7 +110,6 @@ class OccupancyGridVisualizer:
 
         self._trajectory.append((pose.x, pose.y))
 
-        # --- Window 1 ---
         self._render_map(coverage_map, occupancy_grid)
         self._im.set_data(self._grid)
         self._robot_dot.set_data([pose.x], [pose.y])
@@ -125,7 +122,6 @@ class OccupancyGridVisualizer:
         self.fig1.canvas.draw()
         self.fig1.canvas.flush_events()
 
-        # --- Window 2 ---
         self._visit_grid = coverage_map.get_visit_grid(self.map_size)
         self._visit_grid = np.clip(self._visit_grid, 0, 2)
         self._visit_im.set_data(self._visit_grid)

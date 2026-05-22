@@ -7,9 +7,6 @@ from .base import ExplorationStrategy
 
 
 class GreedyExploration(ExplorationStrategy):
-    """
-    Средний уровень: едет к ближайшей непокрытой клетке вокруг.
-    """
 
     def __init__(
             self,
@@ -57,7 +54,7 @@ class GreedyExploration(ExplorationStrategy):
     ) -> Optional[Tuple[float, float]]:
         """Поиск на больших радиусах."""
         for radius in [3.0, 5.0, 8.0, 10.0]:
-            step = 0.5  # грубый поиск на больших дистанциях
+            step = 0.5
             for dx in range(int(-radius / step), int(radius / step) + 1):
                 for dy in range(int(-radius / step), int(radius / step) + 1):
                     x = current_pose.x + dx * step
@@ -70,6 +67,9 @@ class GreedyExploration(ExplorationStrategy):
                     if not coverage_map.is_visited(x, y):
                         return x, y
         return None
+
+    def reset_target(self) -> None:
+        self.last_target = None
 
     def is_complete(self) -> bool:
         return self.complete

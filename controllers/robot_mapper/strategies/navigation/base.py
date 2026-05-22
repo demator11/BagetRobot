@@ -1,22 +1,19 @@
-from typing import Protocol
+from typing import Optional, Protocol
 
 from ...models.command import RobotCommand
 from ...models.pose import Pose
+from ...models.sensor_data import SensorData
 
 
 class NavigationStrategy(Protocol):
-    """Протокол стратегии навигации - как добраться до цели."""
 
     def compute_command(
             self,
             current_pose: Pose,
             target_x: float,
-            target_y: float
+            target_y: float,
+            sensor_data: Optional[SensorData] = None,
     ) -> RobotCommand:
-        """
-        По текущей позиции и цели выдать команду управления.
-        Для дифференциального привода: сначала поворот, потом движение.
-        """
         ...
 
     def is_target_reached(
@@ -24,7 +21,6 @@ class NavigationStrategy(Protocol):
             current_pose: Pose,
             target_x: float,
             target_y: float,
-            tolerance: float = 0.1
+            tolerance: float | None = None
     ) -> bool:
-        """Достигли ли цели?"""
         ...

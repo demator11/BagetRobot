@@ -10,10 +10,7 @@ def ray_cast(
         resolution: float = 0.05,
 ) -> List[Tuple[float, float]]:
     """
-    Сгенерировать точки вдоль луча для проверки препятствий.
-
-    Returns:
-        Список точек (x, y) от start до max_range
+    Генерирует точки вдоль луча для проверки препятствий.
     """
     points = []
     steps = int(max_range / resolution)
@@ -31,7 +28,7 @@ def world_to_grid(
         map_origin: Tuple[float, float] = (0, 0),
         resolution: float = 0.05
 ) -> Tuple[int, int]:
-    """Конвертировать мировые координаты в индексы карты."""
+    """Convert world coords to grid indices."""
     gx = int((x - map_origin[0]) / resolution)
     gy = int((y - map_origin[1]) / resolution)
     return gx, gy

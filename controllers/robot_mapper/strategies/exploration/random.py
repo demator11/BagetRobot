@@ -8,10 +8,6 @@ from .base import ExplorationStrategy
 
 
 class RandomExploration(ExplorationStrategy):
-    """
-    Минимальный уровень: случайное движение.
-    Выбирает случайную точку, потом едет к ней.
-    """
 
     def __init__(
             self,
@@ -37,7 +33,6 @@ class RandomExploration(ExplorationStrategy):
         if self.steps_taken > self.max_steps:
             return None
 
-        # Случайная точка вокруг робота
         angle = random.uniform(0, 2 * math.pi)
         distance = random.uniform(0.3, self.random_range)
 

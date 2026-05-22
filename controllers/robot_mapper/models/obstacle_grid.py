@@ -1,7 +1,9 @@
 import math
-from typing import Optional, Tuple
+from typing import List, Optional, Tuple
 
 import numpy as np
+
+from .pose import Pose
 
 FREE = 0.0
 WALL = 1.0
@@ -9,12 +11,6 @@ UNKNOWN = 0.5
 
 
 class OccupancyGrid:
-    """Карта занятости с препятствиями.
-
-    - 0.0 = свободно
-    - 1.0 = стена
-    - 0.5 = неизвестно (не используется)
-    """
 
     def __init__(self, map_size: int = 200, resolution: float = 0.2):
         self.map_size = map_size
@@ -53,7 +49,6 @@ class OccupancyGrid:
     def add_rectangle(
         self, cx: float, cy: float, width: float, height: float
     ):
-        """Закрасить прямоугольную область как стену."""
         half_w = width / 2
         half_h = height / 2
         x_min, _ = self._world_to_cell(cx - half_w, cy)
@@ -71,7 +66,6 @@ class OccupancyGrid:
     def is_free_with_clearance(
         self, x: float, y: float, clearance: float = 0.3
     ) -> bool:
-        """Проверить, что точка и область вокруг неё свободны."""
         if not self.is_free(x, y):
             return False
         step = self.resolution
@@ -84,11 +78,6 @@ class OccupancyGrid:
     def find_detour(
         self, x1: float, y1: float, x2: float, y2: float
     ) -> Optional[Tuple[float, float]]:
-        """Найти свободную точку в обход препятствия на пути.
-
-        Ищет сбоку от первой стены на луче к цели.
-        Возвращает точку с буфером 0.3 м от стен.
-        """
         dx = x2 - x1
         dy = y2 - y1
         dist = math.hypot(dx, dy)
@@ -124,6 +113,46 @@ class OccupancyGrid:
                         return (wx, wy)
 
         return None
+
+    def update_from_sonar(
+        self,
+        pose: Pose,
+        distances: List[float],
+        angles: List[float],
+        max_range: float = 3.0,
+    ) -> None:
+        beam_res = max(self.resolution, 0.05)
+
+        for dist, angle in zip(distances, angles):
+            beam_angle = pose.theta + angle
+
+            if dist < max_range and dist > self.resolution:
+                ox = pose.x + dist * math.cos(beam_angle)
+                oy = pose.y + dist * math.sin(beam_angle)
+                cx, cy = self._world_to_cell(ox, oy)
+                if 0 <= cx < self.map_size and 0 <= cy < self.map_size:
+                    self.grid[cy, cx] = WALL
+
+                steps = max(int(dist / beam_res), 2)
+                for i in range(1, steps):
+                    t = i / steps
+                    px = pose.x + t * dist * math.cos(beam_angle)
+                    py = pose.y + t * dist * math.sin(beam_angle)
+                    cx, cy = self._world_to_cell(px, py)
+                    if 0 <= cx < self.map_size and 0 <= cy < self.map_size:
+                        if self.grid[cy, cx] != WALL:
+                            self.grid[cy, cx] = FREE
+
+            elif dist >= max_range:
+                # No obstacle within range — mark beam cells as FREE
+                steps = int(max_range / beam_res)
+                for i in range(1, steps):
+                    px = pose.x + i * beam_res * math.cos(beam_angle)
+                    py = pose.y + i * beam_res * math.sin(beam_angle)
+                    cx, cy = self._world_to_cell(px, py)
+                    if 0 <= cx < self.map_size and 0 <= cy < self.map_size:
+                        if self.grid[cy, cx] != WALL:
+                            self.grid[cy, cx] = FREE
 
     def to_numpy(self) -> np.ndarray:
         return self.grid

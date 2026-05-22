@@ -7,17 +7,12 @@ from controllers.robot_mapper.models.pose import Pose
 from controllers.robot_mapper.strategies.exploration.greedy import (
     GreedyExploration,
 )
-from controllers.robot_mapper.strategies.exploration.random import (
-    RandomExploration,
-)
 from controllers.robot_mapper.strategies.navigation.differential import (
     DifferentialDriveNavigation,
 )
 from controllers.robot_mapper.visualizer import OccupancyGridVisualizer
 
-
 SPAWN_RADIUS = 10.0
-
 
 def generate_walls(grid: OccupancyGrid, count: int = 5, max_size: float = 2.0):
     """Разместить случайные прямоугольные стены в радиусе 10 м от старта."""
@@ -28,7 +23,7 @@ def generate_walls(grid: OccupancyGrid, count: int = 5, max_size: float = 2.0):
         h = random.uniform(0.5, max_size)
         grid.add_rectangle(cx, cy, w, h)
 
-    # Чистая зона вокруг старта — ±1.6 м
+    
     for dx in range(-8, 9):
         for dy in range(-8, 9):
             x = dx * grid.resolution
@@ -37,9 +32,8 @@ def generate_walls(grid: OccupancyGrid, count: int = 5, max_size: float = 2.0):
             if 0 <= cx < grid.map_size and 0 <= cy < grid.map_size:
                 grid.grid[cy, cx] = 0.0
 
-    # Стена рядом с роботом — сразу за чистой зоной
+    
     grid.add_rectangle(2.2, 0, 0.4, 2.0)
-
 
 def run_demo(exploration_strategy, name: str, steps: int = 200):
     print(f"\n=== {name} ===")
@@ -118,7 +112,6 @@ def run_demo(exploration_strategy, name: str, steps: int = 200):
     vis.close()
     return coverage.coverage_percent()
 
-
 if __name__ == "__main__":
     print("Robot Exploration Demo")
     print("=" * 50)
@@ -130,6 +123,12 @@ if __name__ == "__main__":
         "Greedy Strategy",
         steps,
     )
+
+    # greedy_score = run_demo(
+    #     RandomExploration(),
+    #     "Greedy Strategy",
+    #     steps,
+    # )
 
     print(f"\n{'=' * 50}")
     print("RESULTS:")

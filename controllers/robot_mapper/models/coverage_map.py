@@ -6,7 +6,6 @@ from .pose import Pose
 
 
 class CoverageMap:
-    """Карта покрытия (где побывал робот и сколько раз)."""
 
     def __init__(self, resolution: float = 0.1, map_size: int = 500):
         self.resolution = resolution
@@ -37,10 +36,6 @@ class CoverageMap:
         return cell in self.visits
 
     def get_visit_grid(self, map_size: int = 0) -> np.ndarray:
-        """Вернуть 2D массив счётчиков посещений.
-
-        0 = не посещено, 1 = один раз, >=2 = многократно.
-        """
         if map_size == 0:
             map_size = self.map_size
         grid = np.zeros((map_size, map_size), dtype=np.int32)
