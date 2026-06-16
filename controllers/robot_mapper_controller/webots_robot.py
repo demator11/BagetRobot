@@ -1,4 +1,4 @@
-"""WebotsRobot вЂ” HAL for Webots."""
+"""WebotsRobot РІР‚вЂќ HAL for Webots."""
 
 import math
 import sys

@@ -15,7 +15,7 @@ class OccupancyGrid:
     def __init__(self, map_size: int = 200, resolution: float = 0.2):
         self.map_size = map_size
         self.resolution = resolution
-        self.grid = np.full((map_size, map_size), FREE)
+        self.grid = np.full((map_size, map_size), UNKNOWN)
 
     def _world_to_cell(self, x: float, y: float) -> Tuple[int, int]:
         cx = int(x / self.resolution + self.map_size / 2)
@@ -152,6 +152,65 @@ class OccupancyGrid:
                     if 0 <= cx < self.map_size and 0 <= cy < self.map_size:
                         if self.grid[cy, cx] != WALL:
                             self.grid[cy, cx] = FREE
+
+    def find_path(
+        self,
+        x1: float, y1: float,
+        x2: float, y2: float,
+        max_steps: int = 5000,
+    ):
+        start = self._world_to_cell(x1, y1)
+        goal = self._world_to_cell(x2, y2)
+        if not (0 <= start[0] < self.map_size and 0 <= start[1] < self.map_size):
+            return None
+        if not (0 <= goal[0] < self.map_size and 0 <= goal[1] < self.map_size):
+            return None
+        if self.grid[start[1], start[0]] == WALL:
+            return None
+        if self.grid[goal[1], goal[0]] == WALL:
+            return None
+
+        from collections import deque
+        import numpy as np
+        visited = np.zeros((self.map_size, self.map_size), dtype=bool)
+        parent = {}
+        q = deque()
+        q.append(start)
+        visited[start[1], start[0]] = True
+        found = False
+
+        while q and len(parent) < max_steps:
+            cx, cy = q.popleft()
+            if (cx, cy) == goal:
+                found = True
+                break
+            for dx, dy in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+                nx, ny = cx + dx, cy + dy
+                if 0 <= nx < self.map_size and 0 <= ny < self.map_size:
+                    if not visited[ny, nx] and self.grid[ny, nx] != WALL:
+                        blocked = False
+                        for cdx, cdy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1)):
+                            nnx, nny = nx + cdx, ny + cdy
+                            if 0 <= nnx < self.map_size and 0 <= nny < self.map_size:
+                                if self.grid[nny, nnx] == WALL:
+                                    blocked = True
+                                    break
+                        if not blocked:
+                            visited[ny, nx] = True
+                            parent[(nx, ny)] = (cx, cy)
+                            q.append((nx, ny))
+
+        if not found:
+            return None
+
+        path = []
+        cell = goal
+        while cell != start:
+            path.append(self._cell_to_world(cell[0], cell[1]))
+            cell = parent[cell]
+        path.reverse()
+        path.insert(0, (x1, y1))
+        return path
 
     def to_numpy(self) -> np.ndarray:
         return self.grid
