@@ -144,7 +144,6 @@ class OccupancyGrid:
                             self.grid[cy, cx] = FREE
 
             elif dist >= max_range:
-                # No obstacle within range — mark beam cells as FREE
                 steps = int(max_range / beam_res)
                 for i in range(1, steps):
                     px = pose.x + i * beam_res * math.cos(beam_angle)

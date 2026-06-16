@@ -1,0 +1,479 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+  title "Robot Mapping Competition"
+}
+Viewpoint {
+  orientation -0.2525706321274207 -0.3337742206991713 0.9081865696999797 4.893853178406678
+  position -1.0656542160716551 3.1734217681521795 2.1527713089502076
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 3 3
+  wallThickness 0.02
+  wallHeight 0.15
+}
+Solid {
+  translation 0.6 0.05 0.3
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 0.3 0.1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.05 0.1 0.8
+      }
+    }
+  ]
+  name "wall1"
+  boundingObject Box {
+    size 0.05 0.1 0.8
+  }
+}
+Solid {
+  translation -0.5 0.05 -0.4
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 0.3 0.1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.8 0.1 0.05
+      }
+    }
+  ]
+  name "wall2"
+  boundingObject Box {
+    size 0.8 0.1 0.05
+  }
+}
+Solid {
+  translation 0 0.05 -0.8
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 0.3 0.1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.05 0.1 0.6
+      }
+    }
+  ]
+  name "wall3"
+  boundingObject Box {
+    size 0.05 0.1 0.6
+  }
+}
+Robot {
+  translation -3.721162065595339e-07 -0.07140096098087789 0.024744558235997687
+  rotation 0.9999999999948894 -2.2567199237704e-06 -2.2646181863184514e-06 1.570797515673487
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.15 0.25 0.85
+        roughness 0.3
+        metalness 0.4
+      }
+      geometry Box {
+        size 0.12 0.03 0.1
+      }
+    }
+    Solid {
+      translation 0 0.018 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.72 0.75 0.8
+            roughness 0.4
+            metalness 0.5
+          }
+          geometry Box {
+            size 0.1 0.006 0.088
+          }
+        }
+      ]
+      name "top_plate"
+    }
+    Solid {
+      translation 0.062 0 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.95 0.8 0.05
+            roughness 0.5
+            metalness 0.1
+          }
+          geometry Box {
+            size 0.004 0.03 0.1
+          }
+        }
+      ]
+      name "bumper_front"
+    }
+    Solid {
+      translation -0.062 0 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.95 0.8 0.05
+            roughness 0.5
+            metalness 0.1
+          }
+          geometry Box {
+            size 0.004 0.03 0.1
+          }
+        }
+      ]
+      name "bumper_rear"
+    }
+    Solid {
+      translation 0.04 0.025 0.03
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.1 0.95 0.3
+            roughness 0.2
+            metalness 0
+            emissiveColor 0 0.6 0.1
+          }
+          geometry Sphere {
+            radius 0.009
+          }
+        }
+      ]
+      name "eye_left"
+    }
+    Solid {
+      translation 0.04 0.025 -0.03
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.1 0.95 0.3
+            roughness 0.2
+            metalness 0
+            emissiveColor 0 0.6 0.1
+          }
+          geometry Sphere {
+            radius 0.009
+          }
+        }
+      ]
+      name "eye_right"
+    }
+    Solid {
+      translation -0.03 0.048 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.4 0.4 0.4
+            roughness 0.5
+            metalness 0.7
+          }
+          geometry Cylinder {
+            height 0.04
+            radius 0.004
+          }
+        }
+      ]
+      name "antenna_pole"
+    }
+    Solid {
+      translation -0.03 0.07 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.95 0.1 0.1
+            roughness 0.2
+            metalness 0
+            emissiveColor 0.6 0 0
+          }
+          geometry Sphere {
+            radius 0.009
+          }
+        }
+      ]
+      name "antenna_tip"
+    }
+    Solid {
+      translation 0.075 0.01 0
+      rotation 0 0 1 -1.5708
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0.45 0
+            roughness 0.3
+            metalness 0
+            emissiveColor 0.6 0.2 0
+          }
+          geometry Cone {
+            bottomRadius 0.011
+            height 0.02
+          }
+        }
+      ]
+      name "direction_arrow"
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 6.419134071875075e-08
+        axis 0 0 1
+        anchor 0 0 0.06
+      }
+      device [
+        RotationalMotor {
+          name "left_wheel_motor"
+          maxVelocity 6.28
+        }
+        PositionSensor {
+          name "left_wheel_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0 0.06
+        rotation -3.209567035937536e-08 0.999999999999999 3.209555246561172e-08 1.570800000000001
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.08 0.08 0.08
+              roughness 0.9
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.013
+              radius 0.025
+            }
+          }
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.7 0.7 0.76
+              roughness 0.2
+              metalness 0.8
+            }
+            geometry Cylinder {
+              height 0.015
+              radius 0.013
+            }
+          }
+        ]
+        name "left_wheel"
+        boundingObject Cylinder {
+          height 0.013
+          radius 0.025
+        }
+        physics Physics {
+          density -1
+          mass 0.05
+        }
+        linearVelocity -3.411212299277872e-09 6.075087523648801e-06 9.977199552436734e-07
+        angularVelocity -9.184750822997229e-06 -1.375260237940744e-07 -1.606452411786994e-10
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 6.428453797207225e-08
+        axis 0 0 1
+        anchor 0 0 -0.06
+      }
+      device [
+        RotationalMotor {
+          name "right_wheel_motor"
+          maxVelocity 6.28
+        }
+        PositionSensor {
+          name "right_wheel_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0 -0.06
+        rotation -3.214226898603611e-08 0.999999999999999 3.214215092110648e-08 1.570800000000001
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.08 0.08 0.08
+              roughness 0.9
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.013
+              radius 0.025
+            }
+          }
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.7 0.7 0.76
+              roughness 0.2
+              metalness 0.8
+            }
+            geometry Cylinder {
+              height 0.015
+              radius 0.013
+            }
+          }
+        ]
+        name "right_wheel"
+        boundingObject Cylinder {
+          height 0.013
+          radius 0.025
+        }
+        physics Physics {
+          density -1
+          mass 0.05
+        }
+        linearVelocity -3.4383044358560157e-09 -5.609349463996511e-06 4.843421389046908e-08
+        angularVelocity -9.444542864766686e-06 -1.3648626093213288e-07 -1.605109901375089e-10
+      }
+    }
+    Solid {
+      translation 0.045 -0.01 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.15 0.15 0.15
+            roughness 0.8
+            metalness 0
+          }
+          geometry Sphere {
+            radius 0.013
+          }
+        }
+      ]
+      name "caster_front"
+      boundingObject Sphere {
+        radius 0.013
+      }
+      physics Physics {
+        density -1
+        mass 0.02
+      }
+    }
+    Solid {
+      translation -0.045 -0.01 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.15 0.15 0.15
+            roughness 0.8
+            metalness 0
+          }
+          geometry Sphere {
+            radius 0.013
+          }
+        }
+      ]
+      name "caster_rear"
+      boundingObject Sphere {
+        radius 0.013
+      }
+      physics Physics {
+        density -1
+        mass 0.02
+      }
+    }
+    DistanceSensor {
+      translation 0.05 0.01 0
+      rotation 0 1 0 -1.27
+      name "ps0"
+      lookupTable [
+        0 0 0
+        1.5 1.5 0
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.05 0.01 0
+      rotation 0 1 0 -0.77
+      name "ps1"
+      lookupTable [
+        0 0 0
+        1.5 1.5 0
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.05 0.01 0
+      rotation 0 1 0 -0.35
+      name "ps2"
+      lookupTable [
+        0 0 0
+        1.5 1.5 0
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.05 0.01 0
+      rotation 0 1 0 0.35
+      name "ps3"
+      lookupTable [
+        0 0 0
+        1.5 1.5 0
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.05 0.01 0
+      rotation 0 1 0 0.77
+      name "ps4"
+      lookupTable [
+        0 0 0
+        1.5 1.5 0
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.05 0.01 0
+      rotation 0 1 0 1.27
+      name "ps5"
+      lookupTable [
+        0 0 0
+        1.5 1.5 0
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.05 0.01 0
+      rotation 0 1 0 2
+      name "ps6"
+      lookupTable [
+        0 0 0
+        1.5 1.5 0
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.05 0.01 0
+      rotation 0 1 0 -2
+      name "ps7"
+      lookupTable [
+        0 0 0
+        1.5 1.5 0
+      ]
+      type "sonar"
+    }
+    GPS {
+    }
+  ]
+  name "mapper_robot"
+  boundingObject Box {
+    size 0.12 0.03 0.1
+  }
+  physics Physics {
+    density -1
+    mass 0.5
+  }
+  controller "robot_mapper_controller"
+  linearVelocity -3.830198568400962e-09 2.269535777962463e-07 5.308741807206994e-07
+  angularVelocity -9.314645933258659e-06 5.482438095550193e-07 -1.595480266775152e-10
+}
